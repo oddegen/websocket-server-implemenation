@@ -39,33 +39,6 @@ func New(w http.ResponseWriter, r *http.Request) (*Ws, error) {
 
 }
 
-// GET /chat HTTP/1.1
-// Host: server.example.com
-// Upgrade: websocket
-// Connection: Upgrade
-// Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
-// Origin: http://example.com
-// Sec-WebSocket-Protocol: chat, superchat
-// Sec-WebSocket-Version: 13
-
-// HTTP/1.1 101 Switching Protocols
-// Upgrade: websocket
-// Connection: Upgrade
-// Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
-// Sec-WebSocket-Protocol: chat
-
-// Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
-
-// For this header field, the server has to take the value (as present
-// in the header field, e.g., the base64-encoded [RFC4648] version minus
-// any leading and trailing whitespace) and concatenate this with the
-// Globally Unique Identifier (GUID, [RFC4122]) "258EAFA5-E914-47DA-
-// 95CA-C5AB0DC85B11" in string form, which is unlikely to be used by
-// network endpoints that do not understand the WebSocket Protocol.  A
-// SHA-1 hash (160 bits) [FIPS.180-3], base64-encoded (see Section 4 of
-// [RFC4648]), of this concatenation is then returned in the server's
-// handshake.
-
 const GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 func wsAccept(key string) string {
