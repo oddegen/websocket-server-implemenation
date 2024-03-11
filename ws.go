@@ -99,7 +99,9 @@ func (ws *Ws) Recv() (*Frame, error) {
 	length := uint64(b & 0x7F)
 	var n int = 0
 
-	if length == 126 {
+	if length <= 125 {
+		frame.Length = length
+	} else if length == 126 {
 		n = 2
 	} else if length == 127 {
 		n = 8
@@ -202,7 +204,7 @@ func (ws *Ws) Close() error {
 
 	f.Data = make([]byte, 2)
 	f.Data[0] = byte(ws.statusCode >> 1)
-	f.Data[2] = byte(ws.statusCode)
+	f.Data[1] = byte(ws.statusCode)
 
 	if err := ws.Send(f); err != nil {
 		return err

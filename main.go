@@ -28,17 +28,17 @@ func wsHandle(w http.ResponseWriter, r *http.Request) {
 		}
 
 		switch frame.Opcode {
-		case 8:
+		case ConnectionClose:
 			return
 		// Ping
-		case 9:
+		case Ping:
 			frame.Opcode = 10
 			fallthrough
-		case 0:
+		case ContinuationFrame:
 			fallthrough
 
 		// Text/Binary Frame
-		case 1, 2:
+		case TextFrame, BinaryFrame:
 			if err = ws.Send(frame); err != nil {
 				log.Println("Error sending", err)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
